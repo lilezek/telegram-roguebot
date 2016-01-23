@@ -1,0 +1,16 @@
+{
+  "name": "roguebot",
+  "version": "0.0.0",
+  "description": "Rogue interface for Telegram bot.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ezequiel Santamaría Navarro",
+  "license": "ISC",
+  "dependencies": {
+    "async": "1.5.2",
+    "node-telegram-bot-api": "0.19.2",
+    "temp": "0.8.3"
+  }
+}
