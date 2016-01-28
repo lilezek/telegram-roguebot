@@ -17,6 +17,7 @@ const help = fs.readFileSync("help.txt").toString();
 
 temp.track();
 
+var saved = false;
 function newRogue(savegame) {
   console.log("new rogue "+savegame);
   function setUpRogue() {
@@ -36,7 +37,7 @@ function newRogue(savegame) {
     rogue.stdin.write("o\ntt\nRogue bot\n\n\n ");
   }
 
-  if (savegame) {
+  if (savegame && saved) {
     // Copiar el fichero
     exec("cp -p rogue.save rogue.save.copy", function() {
       rogue = spawn('rogue', ['rogue.save']);
@@ -79,6 +80,26 @@ var blackListCommands = {
   'o': true,
   'S': true
 };
+var actionCommands = {
+  's': true,
+  'y': true,
+  'u': true,
+  'h': true,
+  'j': true,
+  'k': true,
+  'l': true,
+  'n': true,
+  'm': true,
+  'Y': true,
+  'U': true,
+  'H': true,
+  'J': true,
+  'K': true,
+  'L': true,
+  'N': true,
+  'M': true,
+  '.': true  
+};
 var specialCommands = {};
 var sendImage = false;
 rogueScreenWatcher.on('change', function(event, filename) {
@@ -92,9 +113,15 @@ rogueScreenWatcher.on('change', function(event, filename) {
         tbot.sendPhoto(chatIds[i], tempName);
       else {
         var x = rogueText.indexOf("--press space to continue--");
+        var y = rogueText.indexOf("Rogueists");
         if (x != -1) {
           var pos = charToPosition(rogueText, x - 2);
           tbot.sendMessage(chatIds[i], "```\n" + mapToText(textToMap(rogueText), pos.x, 0, 80, pos.y) + "\n```", {
+            parse_mode: 'Markdown'
+          });
+          rogue.stdin.write(" ");
+        } else if (y != -1) {
+          tbot.sendMessage(chatIds[i], "You dead fucking moron. Restarting "+(saved ? "from last saved game" : "new rogue"), {
             parse_mode: 'Markdown'
           });
           rogue.stdin.write(" ");
@@ -250,6 +277,7 @@ specialCommands['ghelp'] = function(msg) {
 }
 
 specialCommands['gsave'] = function(msg) {
+  saved = true;
   rogue.stdin.write("S\n");
 }
 

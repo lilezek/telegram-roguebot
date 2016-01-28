@@ -17,7 +17,9 @@ z<dir>  zap a wand in a direction
 &       save screen into 'rogue.screen'
 ^P      repeat last message
 ^[      cancel command
-S       save game
+gsave   save game
+gload   load game
+gmap	ask for a global map of the dungeon
 !       shell escape
 F<dir>  fight till either of you dies
 r       read scroll

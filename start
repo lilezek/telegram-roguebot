@@ -1,4 +1,6 @@
 #!/bin/bash
 
+git pull
 touch rogue.screen
 nodejs index.js
+
